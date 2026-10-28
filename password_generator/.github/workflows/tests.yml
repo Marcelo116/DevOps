@@ -10,6 +10,9 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: password_generator
 
     steps:
       - name: Checkout code
@@ -41,6 +44,7 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./password_generator
+          file: ./password_generator/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/generator_pass:latest
